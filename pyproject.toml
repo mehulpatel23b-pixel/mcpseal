@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcpseal"
+version = "1.0.0"
+description = "Offline security audit for MCP server configuration: catches hardcoded secrets, unpinned packages, shell wrappers, over-broad filesystem roots, docker escape flags and auto-approved tools before an agent runs."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Harry Chavada" }]
+keywords = ["mcp", "model-context-protocol", "security", "audit", "supply-chain", "blue-team", "claude", "cursor"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Security",
+  "Environment :: Console",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+mcpseal = "mcpseal.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["src"]

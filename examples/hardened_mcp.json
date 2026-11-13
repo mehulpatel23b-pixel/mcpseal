@@ -1,0 +1,35 @@
+{
+  "//": "The same capabilities, configured safely. mcpseal should report clean.",
+  "mcpServers": {
+    "files": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@2025.8.15",
+        "./src"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "LOG_LEVEL": "info"
+      },
+      "autoApprove": ["read_file", "list_directory"]
+    },
+    "vendor-api": {
+      "type": "http",
+      "url": "https://api.vendor.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${VENDOR_TOKEN}"
+      }
+    },
+    "sandbox": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "--user", "1000:1000",
+        "--read-only",
+        "--cap-drop", "ALL",
+        "ghcr.io/some-org/mcp-sandbox@sha256:6f1b0f5c2a7d4e3b9c8a1f2e5d6c7b8a9f0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c"
+      ]
+    }
+  }
+}
